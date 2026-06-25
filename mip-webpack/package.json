@@ -1,0 +1,23 @@
+{
+  "name": "mip-webpack",
+  "version": "1.0.0",
+  "description": "Полная интеграция MIP с Webpack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No tests yet\""
+  },
+  "peerDependencies": {
+    
+  },
+  "dependencies": {
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.0",
+    "webpack-dev-server": "^4.15.0",
+    "html-webpack-plugin": "^5.5.0",
+    "babel-loader": "^9.1.0",
+    "@babel/core": "^7.22.0",
+    "@babel/preset-env": "^7.22.0"
+  },
+  "keywords": ["mip", "webpack", "bundler", "plugin"],
+  "license": "MIT"
+}

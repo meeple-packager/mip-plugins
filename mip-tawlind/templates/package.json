@@ -1,0 +1,21 @@
+{
+  "name": "my-tailwind-app",
+  "version": "1.0.0",
+  "description": "Tailwind CSS project created with mip-tailwind",
+  "scripts": {
+    "dev": "mip pe mip-tailwind dev",
+    "build": "mip pe mip-tailwind build --minify",
+    "watch": "mip pe mip-tailwind build --watch"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0"
+  },
+  "mip": {
+    "plugins": ["mip-tailwind"]
+  },
+  "keywords": ["tailwindcss", "mip", "css", "styling"],
+  "license": "MIT"
+}

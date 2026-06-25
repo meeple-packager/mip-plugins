@@ -1,0 +1,21 @@
+{
+  "name": "my-vite-app",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Vite project created with mip-vite plugin",
+  "scripts": {
+    "dev": "mip pe mip-vite dev",
+    "build": "mip pe mip-vite build --production",
+    "preview": "mip pe mip-vite preview"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "mip": {
+    "plugins": ["mip-vite"]
+  },
+  "keywords": ["vite", "mip", "frontend"],
+  "author": "",
+  "license": "MIT"
+}

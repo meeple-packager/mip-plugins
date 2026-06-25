@@ -1,0 +1,29 @@
+{
+  "name": "mip-tailwind",
+  "version": "1.0.0",
+  "description": "Интеграция с Tailwind CSS для MIP",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No tests yet\""
+  },
+  "peerDependencies": {
+    "mip": ">=2.0.0"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.4.0",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0"
+  },
+  "keywords": [
+    "mip",
+    "tailwindcss",
+    "css",
+    "styling",
+    "plugin"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mip-team/mip-tailwind"
+  }
+}

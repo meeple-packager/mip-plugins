@@ -1,0 +1,21 @@
+{
+  "name": "mip-vite",
+  "version": "1.0.0",
+  "description": "Нативная поддержка Vite для MIP",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No tests yet\""
+  },
+  "peerDependencies": {
+    
+  },
+  "dependencies": {
+    "vite": "^5.0.0"
+  },
+  "keywords": ["mip", "vite", "bundler", "plugin", "hmr"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mip-team/mip-vite"
+  }
+}
