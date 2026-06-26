@@ -1,0 +1,7 @@
+{
+  "name": "mip-plugin-mip-lang",
+  "version": "1.0.0",
+  "description": "MIP plugin: mip-lang",
+  "main": "index.js",
+  "dependencies": {}
+}
