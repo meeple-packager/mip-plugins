@@ -7,4 +7,4 @@ mip plugin get <your-plugin-name>
 ```
 
 ## How to create a plugin?
-read documentation
+read documentation bruh
