@@ -1,6 +1,6 @@
 /*
  * ┌─────────────────────────────────────────────────────────────────────┐
- * │   mip-vite — нативная поддержка Vite для MIP                      │
+ * │   mip-vite - нативная поддержка Vite для MIP                      │
  * │   Молниеносный HMR и сборка для продакшена                        │
  * └─────────────────────────────────────────────────────────────────────┘
  */
@@ -176,7 +176,7 @@ export default defineConfig({
 
     help: async () => {
       console.log(`
-⚡ mip-vite — нативная поддержка Vite для MIP
+⚡ mip-vite - нативная поддержка Vite для MIP
 
 Commands:
   dev [--port=<port>] [--host=<host>]   Start dev server with HMR

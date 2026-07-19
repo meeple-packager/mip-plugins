@@ -1,6 +1,6 @@
 /*
  * ┌─────────────────────────────────────────────────────────────────────┐
- * │   mip-webpack — полная интеграция MIP с Webpack                    │
+ * │   mip-webpack - полная интеграция MIP с Webpack                    │
  * │   Быстрая сборка и оптимизация бандлов                             │
  * └─────────────────────────────────────────────────────────────────────┘
  */
@@ -120,7 +120,7 @@ module.exports = {
 
     help: async () => {
       console.log(`
-📦 mip-webpack — полная интеграция MIP с Webpack
+📦 mip-webpack - полная интеграция MIP с Webpack
 
 Commands:
   build [config]       Build project with Webpack

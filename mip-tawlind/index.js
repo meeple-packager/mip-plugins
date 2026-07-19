@@ -1,6 +1,6 @@
 /*
  * ┌─────────────────────────────────────────────────────────────────────┐
- * │   mip-tailwind — интеграция с Tailwind CSS для MIP                │
+ * │   mip-tailwind - интеграция с Tailwind CSS для MIP                │
  * │   Генерация стилей и оптимизация для продакшена                   │
  * └─────────────────────────────────────────────────────────────────────┘
  */
@@ -245,7 +245,7 @@ module.exports = {
 
     help: async () => {
       console.log(`
-🎨 mip-tailwind — интеграция с Tailwind CSS для MIP
+🎨 mip-tailwind - интеграция с Tailwind CSS для MIP
 
 Commands:
   build [--watch|-w] [--minify|-m] [--input=<file>] [--output=<file>]

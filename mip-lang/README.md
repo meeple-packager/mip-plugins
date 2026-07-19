@@ -1,5 +1,5 @@
 
-# mip-lang — custom languages for MIP
+# mip-lang - custom languages for MIP
 
 Create, pack, and apply custom language packs for MIP.
 
@@ -123,16 +123,16 @@ mip --version
 
 ## Available templates
 
-- `en` — English
-- `ru` — Russian
-- `es` — Spanish
-- `fr` — French
-- `de` — German
-- `it` — Italian
-- `pt` — Portuguese
-- `zh` — Chinese
-- `ja` — Japanese
-- `ko` — Korean
+- `en` - English
+- `ru` - Russian
+- `es` - Spanish
+- `fr` - French
+- `de` - German
+- `it` - Italian
+- `pt` - Portuguese
+- `zh` - Chinese
+- `ja` - Japanese
+- `ko` - Korean
 
 ---
 

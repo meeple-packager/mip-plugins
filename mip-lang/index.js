@@ -1,6 +1,6 @@
 /*
  * ┌─────────────────────────────────────────────────────────────────────┐
- * │   mip-lang — custom languages for MIP                              │
+ * │   mip-lang - custom languages for MIP                              │
  * │   Create, package, and apply language packs                       │
  * └─────────────────────────────────────────────────────────────────────┘
  */
@@ -248,7 +248,7 @@ async function apply(args) {
 
   const builtinLocalesPath = path.join(getProjectMipLangLocalesDir(), `${langName}.json`);
 
-  // если в проекте еще нет cwd/plugins/mip-lang — используем builtin mip-lang из репозитория
+  // если в проекте еще нет cwd/plugins/mip-lang - используем builtin mip-lang из репозитория
   if (!fs.existsSync(path.dirname(builtinLocalesPath))) {
     const repoLocalesPath = path.join(__dirname, 'locales');
     const repoLangPath = path.join(repoLocalesPath, `${langName}.json`);
@@ -259,7 +259,7 @@ async function apply(args) {
   }
 
   if (!fs.existsSync(builtinLocalesPath)) {
-    // В случае упакованного языка — попробуем подтянуть локаль из mip-lang-<lang>
+    // В случае упакованного языка - попробуем подтянуть локаль из mip-lang-<lang>
     const packedPluginDir = path.join(process.cwd(), 'plugins', `mip-lang-${langName}`);
     const packedLocalePath = path.join(packedPluginDir, 'locales', `${langName}.json`);
 
@@ -286,7 +286,7 @@ async function apply(args) {
   config.language = langName;
 
   // writeConfig всегда пишет mip.yml. Чтобы тесты/проектам было предсказуемо,
-  // если mip.yml отсутствует — создаём его из текущего config.
+  // если mip.yml отсутствует - создаём его из текущего config.
   // (readConfig может читать mip.json, но mip-lang применяет язык через mip.yml)
   writeConfig(config);
 
@@ -359,7 +359,7 @@ module.exports = {
     },
     help: async () => {
       console.log(`
-🌍 mip-lang — custom languages for MIP
+🌍 mip-lang - custom languages for MIP
 
 Commands:
   create <name> [template]   Create a new language from template
