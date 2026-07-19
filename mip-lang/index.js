@@ -13,15 +13,18 @@ const path = require('path');
 // ==========================================
 
 function getPluginDir() {
-  return path.join(process.cwd(), 'plugins', 'mip-lang');
+  // Локальные файлы mip-plugins размещены в репозитории, поэтому привязываемся к __dirname.
+  return path.join(__dirname, 'locales').includes('locales')
+    ? path.join(__dirname, '..')
+    : path.join(__dirname);
 }
 
 function getLocalesDir() {
-  return path.join(getPluginDir(), 'locales');
+  return path.join(__dirname, 'locales');
 }
 
 function getTemplatesDir() {
-  return path.join(getPluginDir(), 'templates');
+  return path.join(__dirname, 'templates');
 }
 
 function getCustomLangPath(lang) {
@@ -32,6 +35,7 @@ function getTemplatePath(lang) {
   return path.join(getTemplatesDir(), `${lang}.json`);
 }
 
+
 function getMipYmlPath() {
   return path.join(process.cwd(), 'mip.yml');
 }
@@ -39,6 +43,20 @@ function getMipYmlPath() {
 function getMipJsonPath() {
   return path.join(process.cwd(), 'mip.json');
 }
+
+function getProjectMipLangLocalesDir() {
+  return path.join(process.cwd(), 'plugins', 'mip-lang', 'locales');
+}
+
+function getPluginBaseDir() {
+  // папка builtin mip-lang в проекте (cwd/plugins/mip-lang) или fallback на репо
+  return path.join(process.cwd(), 'plugins', 'mip-lang');
+}
+
+
+
+
+
 
 // ==========================================
 // HELPERS
@@ -70,7 +88,16 @@ function getAvailableCustomLangs() {
 }
 
 function readConfig() {
-  // Приоритет: mip.json (временное решение, пока не наладим YAML)
+  // Приоритет: mip.yml
+  const ymlPath = getMipYmlPath();
+  if (fs.existsSync(ymlPath)) {
+    try {
+      const yaml = require('js-yaml');
+      return yaml.load(fs.readFileSync(ymlPath, 'utf8'));
+    } catch {}
+  }
+
+  // fallback: mip.json
   const jsonPath = getMipJsonPath();
   if (fs.existsSync(jsonPath)) {
     try {
@@ -78,6 +105,7 @@ function readConfig() {
     } catch {}
   }
 
+  // fallback: package.json
   const pkgPath = path.join(process.cwd(), 'package.json');
   if (fs.existsSync(pkgPath)) {
     try {
@@ -89,11 +117,16 @@ function readConfig() {
 }
 
 function writeConfig(config) {
-  // Временно пишем в mip.json (пока не решим проблему с YAML)
-  const jsonPath = getMipJsonPath();
-  fs.writeFileSync(jsonPath, JSON.stringify(config, null, 2));
-  console.log(`   Updated mip.json (migrate to mip.yml later)`);
+  // Пишем в mip.yml (основной формат)
+  const ymlPath = getMipYmlPath();
+  const yaml = require('js-yaml');
+  // гарантируем, что директория существует (на практике это cwd)
+  fs.mkdirSync(path.dirname(ymlPath), { recursive: true });
+  fs.writeFileSync(ymlPath, yaml.dump(config, { indent: 2 }));
+  console.log(`   Updated mip.yml`);
 }
+
+
 
 // ==========================================
 // COMMANDS
@@ -207,6 +240,43 @@ async function apply(args) {
     return;
   }
 
+  // 1) Убедимся, что файл локали существует в той точке, которую читает lib/i18n/index.js:
+  //    plugins/<any-plugin>/locales/<lang>.json
+  // Встроенный mip-lang хранит локали в plugins/mip-lang/locales, поэтому поддержим:
+  //  - plugins/mip-lang/locales/<lang>.json (проще всего)
+  ensureDirs();
+
+  const builtinLocalesPath = path.join(getProjectMipLangLocalesDir(), `${langName}.json`);
+
+  // если в проекте еще нет cwd/plugins/mip-lang — используем builtin mip-lang из репозитория
+  if (!fs.existsSync(path.dirname(builtinLocalesPath))) {
+    const repoLocalesPath = path.join(__dirname, 'locales');
+    const repoLangPath = path.join(repoLocalesPath, `${langName}.json`);
+    if (fs.existsSync(repoLangPath)) {
+      fs.mkdirSync(path.dirname(builtinLocalesPath), { recursive: true });
+      fs.copyFileSync(repoLangPath, builtinLocalesPath);
+    }
+  }
+
+  if (!fs.existsSync(builtinLocalesPath)) {
+    // В случае упакованного языка — попробуем подтянуть локаль из mip-lang-<lang>
+    const packedPluginDir = path.join(process.cwd(), 'plugins', `mip-lang-${langName}`);
+    const packedLocalePath = path.join(packedPluginDir, 'locales', `${langName}.json`);
+
+    if (fs.existsSync(packedLocalePath)) {
+      fs.mkdirSync(path.dirname(builtinLocalesPath), { recursive: true });
+      fs.copyFileSync(packedLocalePath, builtinLocalesPath);
+    }
+  }
+
+  if (!fs.existsSync(builtinLocalesPath)) {
+    console.log(`❌ Language "${langName}" not found`);
+    console.log(`Available languages: ${getAvailableCustomLangs().join(', ') || '(none)'}`);
+    return;
+  }
+
+
+  // 2) Применяем язык в конфиге проекта
   const config = readConfig();
   if (!config) {
     console.log('❌ No config file found. Run mip init first');
@@ -214,11 +284,17 @@ async function apply(args) {
   }
 
   config.language = langName;
+
+  // writeConfig всегда пишет mip.yml. Чтобы тесты/проектам было предсказуемо,
+  // если mip.yml отсутствует — создаём его из текущего config.
+  // (readConfig может читать mip.json, но mip-lang применяет язык через mip.yml)
   writeConfig(config);
+
 
   console.log(`✅ Applied language "${langName}"`);
   console.log(`   Run any command to see changes`);
 }
+
 
 async function resetLang() {
   const config = readConfig();
