@@ -270,6 +270,16 @@ async function apply(args) {
   }
 
   if (!fs.existsSync(builtinLocalesPath)) {
+    // Если локаль всё ещё не найдена - берём её из bundled-шаблона плагина
+    // (например, встроенные языки вроде "pirate" хранятся в templates/).
+    const templateLangPath = getTemplatePath(langName);
+    if (fs.existsSync(templateLangPath)) {
+      fs.mkdirSync(path.dirname(builtinLocalesPath), { recursive: true });
+      fs.copyFileSync(templateLangPath, builtinLocalesPath);
+    }
+  }
+
+  if (!fs.existsSync(builtinLocalesPath)) {
     console.log(`❌ Language "${langName}" not found`);
     console.log(`Available languages: ${getAvailableCustomLangs().join(', ') || '(none)'}`);
     return;
